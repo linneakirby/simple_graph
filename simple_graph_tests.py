@@ -100,7 +100,7 @@ class GraphTest(unittest.TestCase):
 
 		self.assertNotEqual(a, a2)
 
-	def test_look_deep_for(self):
+	def test_look_deep_for_existing_node(self):
 		d = HoldenCaulfield()
 		g = HoldenCaulfield()
 
@@ -119,6 +119,20 @@ class GraphTest(unittest.TestCase):
 
 		self.assertIs(
 			target_node.get_data(), d)
+
+	def test_look_deep_for_nonexistent_node(self):
+
+		root_node = simple_graph.build_graph(
+			{
+			'a': ['b', 'c'],
+	        'b': ['d', 'e', 'f'],
+	        'c': ['g'],
+	        'g': ['h']
+	        },
+	        'a')
+
+		self.assertIsNone(
+			simple_graph.look_deep_for(root_node, 'z'))
 
 class HoldenCaulfield(object):
 	def __eq__(self, other):
