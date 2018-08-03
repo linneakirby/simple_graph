@@ -74,6 +74,8 @@ def init_explored_and_stack(root):
 def look_deep_for(node, target_value):
 	"""
 	depth-first search
+
+	returns the target node, if found or None if not found
 	"""
 	explored, stack = init_explored_and_stack(node)
 
@@ -121,25 +123,3 @@ def build_graph(structure, root_value):
 			parent.add_child(child)
 
 	return root
-
-
-#create a Graph from given input and traverse it in the manner specified
-#default: depth-first
-def main():
-
-	root_node = build_graph(
-			{
-			'a': ['b', 'c'],
-	        'b': ['d', 'e', 'f'],
-	        'c': ['g'],
-	        'g': ['h']
-	        },
-	        'a')
-
-	print(str(root_node))
-	look_deep_for(root_node, "g")
-	print("found: ",look_deep_for(root_node, "g").get_data())
-
-
-if __name__ == "__main__":
-	main()
