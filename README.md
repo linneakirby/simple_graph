@@ -18,8 +18,8 @@ Here is an example of a call to build_graph with a sample user-defined graph and
 
 ```
 root_node = build_graph(
-			{
-			'a': ['b', 'c'],
+		{
+		'a': ['b', 'c'],
 	        'b': ['d', 'e', 'f'],
 	        'c': ['g'],
 	        'g': ['h']
