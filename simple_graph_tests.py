@@ -135,6 +135,9 @@ class GraphTest(unittest.TestCase):
 			simple_graph.look_deep_for(root_node, 'z'))
 
 class HoldenCaulfield(object):
+	'''
+	a phony object to test memory addresses
+	'''
 	def __eq__(self, other):
 		return isinstance(other, type(self))
 
