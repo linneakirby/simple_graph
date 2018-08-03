@@ -3,7 +3,7 @@ Linnea Kirby
 RC Application Round 3
 1 August 2018
 
-"Depth-first searcher"
+"Depth-first searcher" project
 """
 
 class Graph(object):
@@ -28,7 +28,10 @@ class Graph(object):
 		return str({self.get_data() : str(children_list)})
 
 	# def __eq__(self, other):
-	# 	pass
+	# 	if isinstance(other, type(self)):
+	# 		return (self.get_data()) == (other.get_data())
+	# 	else:
+	# 		return False
 
 	def get_data(self):
 		return self._data
@@ -52,25 +55,34 @@ class Graph(object):
 		for new_child in new_children:
 			self.add_child(new_child)
 
-	def look_deep_for(self, target_value):
-		"""depth-first search for target_value"""
-		
-		#recursively look through left-most children all the way down
-		if (self._data == target_value):
-			return self
 
-		else:
-			for child in self._children:
-				if child is not None:
-					#print("looking in child ", child.data)
-					child.look_deep_for(target_value)
-				else:
-					return
+def look_broadly_for(self, target_value):
+	"""TODO: breadth-first search for target_value"""
+	pass
 
-	def look_broadly_for(self, target_value):
-		"""breadth-first search for target_value"""
-		pass
+def init_explored_and_stack(root):
+	return { root: False}, [root]
 
+def look_deep_for(node, target_value):
+	"""
+	depth-first search
+	"""
+	explored, stack = init_explored_and_stack(node)
+
+	while (len(stack) > 0):
+		to_check = stack.pop()
+		if not (explored[to_check]):
+			if(to_check.get_data() == target_value):
+				return to_check
+			explored[to_check] = True
+
+			if(to_check.children()):
+				for child in reversed(to_check.children()):
+					explored[child] = False
+					stack.append(child)
+	#if target_value is not found
+	return None
+				
 
 def build_graph(structure, root_value):
 	"""defines a graph from a given structure and root node value"""
@@ -102,6 +114,7 @@ def build_graph(structure, root_value):
 #create a Graph from given input and traverse it in the manner specified
 #default: depth-first
 def main():
+
 	root_node = build_graph(
 			{
 			'a': ['b', 'c'],
@@ -112,6 +125,8 @@ def main():
 	        'a')
 
 	print(str(root_node))
+	look_deep_for(root_node, "g")
+	print("found: ",look_deep_for(root_node, "g").get_data())
 
 
 if __name__ == "__main__":
