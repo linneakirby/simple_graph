@@ -27,11 +27,14 @@ class Graph(object):
 				children_list.append(child.get_data())
 		return str({self.get_data() : str(children_list)})
 
-	# def __eq__(self, other):
-	# 	if isinstance(other, type(self)):
-	# 		return (self.get_data()) == (other.get_data())
-	# 	else:
-	# 		return False
+	def __eq__(self, other):
+		if isinstance(other, type(self)):
+			return (self.get_data()) == (other.get_data())
+		else:
+			return False
+
+	def __hash__(self):
+		return hash(self.get_data())
 
 	def get_data(self):
 		return self._data
@@ -90,6 +93,8 @@ def build_graph(structure, root_value):
 	existing_nodes = {root_value : root}
 
 	for parent_value, children_values in structure.items():
+		if parent_value is None:
+			raise ValueError("Cannot have None data")
 		#get parent
 		if(parent_value in existing_nodes):
 			parent = existing_nodes.get(parent_value)
@@ -99,6 +104,8 @@ def build_graph(structure, root_value):
 
 		#get child
 		for child_value in children_values:
+			if child_value is None:
+				raise ValueError("Cannot have None data")
 			if(child_value in existing_nodes):
 				child = existing_nodes.get(child_value)
 			else:
