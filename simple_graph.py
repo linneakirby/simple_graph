@@ -1,9 +1,10 @@
 """
 Linnea Kirby
 RC Application Round 3
-1 August 2018
+3 August 2018
 
-"Depth-first searcher" project
+"Depth-first searcher" project - a simple graph class and functions for 
+building graphs and searching through them.
 """
 
 class Graph(object):
@@ -29,9 +30,13 @@ class Graph(object):
 
 	def __eq__(self, other):
 		if isinstance(other, type(self)):
-			return (self.get_data()) == (other.get_data())
-		else:
-			return False
+			return (
+				self.get_data() == other.get_data() and 
+				self.children() == other.children())
+		return False
+
+	def __ne__(self, other):
+		return not self == other
 
 	def __hash__(self):
 		return hash(self.get_data())

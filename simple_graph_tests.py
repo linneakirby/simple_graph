@@ -1,25 +1,18 @@
 """
 Linnea Kirby
 RC Application Round 3
-1 August 2018
+3 August 2018
 
 Tests for simple_graph.py
 
 """
 
-import collections
 import unittest
 
 import simple_graph
 
 class GraphTest(unittest.TestCase):
 
-	@unittest.SkipTest
-	def test_equality(self):
-		a = simple_graph.Graph("a")
-		b = simple_graph.Graph("a")
-
-		self.assertEqual(a, b)
 
 	def test_minimal_graph_construction_root_data(self):
 		root_node = simple_graph.build_graph(
@@ -86,6 +79,27 @@ class GraphTest(unittest.TestCase):
 				},
 				'a')
 
+	def test_equality(self):
+		a = simple_graph.Graph("a")
+		a2 = simple_graph.Graph("a")
+		b = simple_graph.Graph("b")
+
+		a.add_child(b)
+		a2.add_child(b)
+
+		self.assertEqual(a, a2)
+
+	def test_inequality(self):
+		a = simple_graph.Graph("a")
+		a2 = simple_graph.Graph("a")
+		b = simple_graph.Graph("b")
+		c = simple_graph.Graph("c")
+
+		a.add_child(b)
+		a2.add_child(c)
+
+		self.assertNotEqual(a, a2)
+
 	def test_look_deep_for(self):
 		d = HoldenCaulfield()
 		g = HoldenCaulfield()
@@ -112,6 +126,9 @@ class HoldenCaulfield(object):
 
 	def __hash__(self):
 		return hash(id(self))
+
+	def __ne__(self, other):
+		return not self == other
 
 
 if __name__ == '__main__':
